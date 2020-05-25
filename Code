@@ -1,1 +1,82 @@
+/*
+  Dieses Sketch wurde von darius.kschl geschrieben!
 
+  Diesen Würfel kann man für jedes Würfelspiel wie zum Beispiel "Mensch Ärgere dich nicht" verwenden.
+  Die Sieben Leds sind wie bei einem richtigen Würfel angeordnet und stellen die Zahl wie auf einem analogen Würfel dar.
+  Wenn man den Button drückt leuchten die Zahlen durcheinander auf, bis der Würfel dann auf einer Zahl stehen bleibt.
+  Sobald man den Button erneut drückt wird eine neue Zahl gewürfelt.
+  Natürlich kann man das ganze auch ein wenig spannender machen indem man einen Neigungssensor anstelle des Buttons einbaut.
+  Dann würde die Würfelzahl durch ein Schütteln angezeigt werden.
+*/
+
+#define pinLeds1 11
+#define pinLeds2 12
+#define pinLeds3 10
+#define pinLeds4 9
+#define buttonPin 13
+int Button;
+long zahl;
+
+void setup() {
+  //Alle Leds werden als OUTPUTs definiert
+  pinMode(pinLeds1, OUTPUT);
+  pinMode(pinLeds2, OUTPUT);
+  pinMode(pinLeds3, OUTPUT);
+  pinMode(pinLeds4, OUTPUT);
+  
+  //Button wird als INPUT_PULLUP definiert
+  //Dadurch wird der interne Widerstand aktiviert
+  pinMode(buttonPin, INPUT_PULLUP);
+}
+
+void loop() {
+  Button = digitalRead(buttonPin);    //Es wird ausgelsen ob der Button HIGH oder LOW ist
+  for(int i = 1; i < 8  ; i++){       //Diese Schleife führt das Würfeln acht mal aus bevor die Zahl stehen bleibt
+    //Am Anfang werden alle Leds ausgeschaltet
+    if(Button != HIGH){           
+      digitalWrite(pinLeds1, LOW);
+      digitalWrite(pinLeds2, LOW);
+      digitalWrite(pinLeds3, LOW);
+      digitalWrite(pinLeds4, LOW);
+      zahl = random(1,7);             //Es wird eine Zufallszahl gewürfelt
+      if(zahl == 1){                  //Wenn die Zahl 1 ist dann soll die mittlere Zahl angehen
+        digitalWrite(pinLeds1, HIGH);
+        delay(300)                    //Pause die die Leds an bleiben sollen
+      }
+      if(zahl == 2){                  //Wenn die Zahl 2 ist dann soll die mittlere Zahl angehen
+        digitalWrite(pinLeds3, HIGH); 
+        delay(300)                    //Pause die die Leds an bleiben sollen
+      }
+      if(zahl == 3){                  //Wenn die Zahl 3 ist dann soll die mittlere Zahl angehen
+        digitalWrite(pinLeds1, HIGH); 
+        digitalWrite(pinLeds3, HIGH);
+        delay(300)                    //Pause die die Leds an bleiben sollen
+      }
+      if(zahl == 4){                  //Wenn die Zahl 4 ist dann soll die mittlere Zahl angehen
+        digitalWrite(pinLeds2, HIGH);
+        digitalWrite(pinLeds3, HIGH);
+        delay(300)                    //Pause die die Leds an bleiben sollen
+      }
+      if(zahl == 5){                  //Wenn die Zahl 5 ist dann soll die mittlere Zahl angehen
+        digitalWrite(pinLeds2, HIGH);
+        digitalWrite(pinLeds3, HIGH);
+        digitalWrite(pinLeds1, HIGH);
+        delay(300)                    //Pause die die Leds an bleiben sollen
+      }
+      if(zahl == 6){                  //Wenn die Zahl 6 ist dann soll die mittlere Zahl angehen
+        digitalWrite(pinLeds4, HIGH);
+        digitalWrite(pinLeds2, HIGH);
+        digitalWrite(pinLeds3, HIGH);
+        delay(300)                    //Pause die die Leds an bleiben sollen
+      }
+      if(i < 7){                      //Am Ende werden die Leds wieder ausgeschaltet
+        digitalWrite(pinLeds1, LOW);
+        digitalWrite(pinLeds2, LOW);
+        digitalWrite(pinLeds3, LOW);
+        digitalWrite(pinLeds4, LOW);
+        delay(200);                   //Pause die die Leds aus bleiben sollen
+      }
+      
+    }
+  }
+}
